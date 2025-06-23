@@ -11,7 +11,7 @@
         </form>
     </div>
 
-    <div class="d-flex gap-1 col-2 mx-auto mb-3">
+    <div class="d-flex gap-1 col-2 mx-auto mb-3 justify-content-center">
         <form method="post" action="{% url 'filter_by_type' %}">
             {% csrf_token %}
             <input type="hidden" name="type" value="fire">
@@ -29,6 +29,39 @@
             <input type="hidden" name="type" value="grass">
             <button type="submit" class="btn btn-success">PLANTA</button>
         </form>
+            
+        <form method="post" action="{% url 'filter_by_type' %}">
+            {% csrf_token %}
+            <input type="hidden" name="type" value="poison">
+            <button type="submit" class="btn btn-dark">VENENO</button>
+        </form>
+    </div>
+
+    <div class="d-flex gap-1 col-2 mx-auto mb-3 justify-content-center">
+        
+        <form method="post" action="{% url 'filter_by_type' %}">
+            {% csrf_token %}
+            <input type="hidden" name="type" value="flying">
+            <button type="submit" class="btn btn-info">VOLADOR</button>
+        </form>
+
+        <form method="post" action="{% url 'filter_by_type' %}">
+            {% csrf_token %}
+            <input type="hidden" name="type" value="electric">
+            <button type="submit" class="btn btn-warning">ELÉCTRICO</button>
+        </form>
+
+        <form method="post" action="{% url 'filter_by_type' %}">
+            {% csrf_token %}
+            <input type="hidden" name="type" value="ground">
+            <button type="submit" class="btn btn-secondary">TIERRA</button>
+        </form>
+
+        <form method="post" action="{% url 'filter_by_type' %}">
+            {% csrf_token %}
+            <input type="hidden" name="type" value="normal">
+            <button type="submit" class="btn btn-light">NORMAL</button>
+        </form>
     </div>
 
         <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -37,7 +70,18 @@
         {% else %} {% for img in images %}
         <div class="col">
             <!-- evaluar si la imagen pertenece al tipo fuego, agua o planta -->
-            <div class="card border-success mb-3 ms-5" style="max-width: 540px; ">
+            <div class="card
+                {%if 'fire' in img.types %}
+                    border-danger
+                {%elif 'water' in img.types %}
+                    border-primary
+                {%elif 'grass' in img.types %}
+                    border-success
+                {% else %}
+                    border-warning
+                {% endif %}
+                mb-3 ms-5" style="max-width: 540px;">
+                
                  <div class="row g-0">
                      <div class="col-md-4">
                          <img src="{{ img.image }}" class="card-img-top"alt="imagen">

@@ -8,11 +8,16 @@ from django.contrib.auth import get_user
 
 # función que devuelve un listado de cards. Cada card representa una imagen de la API de Pokemon
 def getAllImages():
+    cartas = []
     # debe ejecutar los siguientes pasos:
-    # 1) traer un listado de imágenes crudas desde la API (ver transport.py)
+    # 1) traer un listado de imágenes crudas desde la API (ver transport.py)  
     # 2) convertir cada img. en una card.
-    # 3) añadirlas a un nuevo listado que, finalmente, se retornará con todas las card encontradas.
-    pass
+    # 3) añadirlas a un nuevo listado que, finalmente, se retornará con todas las card encontradas.  
+    raw_image = transport.getAllImages()   ### 1) traemos todas las imágenes crudas llamando a la funcion getAllImages() de transport.py.
+    for img in raw_image:                  ### 2) en este ciclo, todas las imagenes crudas se transforman en cards.
+        carta = translator.fromRequestIntoCard(img)  
+        cartas.append(carta)
+    return cartas                          ### 3) se retorna un listado de cards y, ademas, con información de facil acceso.
 
 # función que filtra según el nombre del pokemon.
 def filterByCharacter(name):
@@ -28,9 +33,10 @@ def filterByCharacter(name):
 def filterByType(type_filter):
     filtered_cards = []
 
-    for card in getAllImages():
+    for card in getAllImages():   ### se trabaja con el listado de cards y se busca una información especifica.
         # debe verificar si la casa de la card coincide con la recibida por parámetro. Si es así, se añade al listado de filtered_cards.
-        filtered_cards.append(card)
+        if type_filter in card.types:
+            filtered_cards.append(card)
 
     return filtered_cards
 
